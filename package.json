@@ -1,0 +1,26 @@
+{
+  "name": "device-blocker-ui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Darrin Thompson <darrinth@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-3": "^6.17.0",
+    "jquery-param": "^0.2.0",
+    "lodash": "^4.17.4",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.1",
+    "redux": "^3.6.0",
+    "redux-actions": "^1.2.0",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.1.0",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
