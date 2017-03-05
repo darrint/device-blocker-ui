@@ -16,12 +16,32 @@ class App extends Component {
     dispatch(doOpenDevice(mac, timeBound));
   }
 
+  renderOpenMenu(mac) {
+      const menu = [
+        [30 * 60, '30m'],
+        [1 * 60 * 60, '1hr'],
+        [2 * 60 * 60, '2hr'],
+        [4 * 60 * 60, '4hr'],
+        [8 * 60 * 60, '8hr'],
+        [16 * 60 * 60, '16hr'],
+        [null, 'forever'],
+      ];
+      return map(menu,
+        ([secs, label]) => (
+          <td
+            key={label}
+            onClick={() => this.handleOpenDevice(mac, secs)}>
+            [{label}]
+          </td>
+        ));
+  }
+
   renderClosedDevice(dev, i) {
     const {name, mac} = dev;
     return (
       <tr key={i}>
         <td>{name}</td>
-        <td onClick={() => this.handleOpenDevice(mac, null)}>[open]</td>
+        {this.renderOpenMenu(mac)}
       </tr>
     );
   }
@@ -49,10 +69,26 @@ class App extends Component {
 
   renderOpenDevice(entry, i) {
     const {'item': {name, mac}, time_bound} = entry;
+    let timeBound;
+    if (time_bound) {
+      const asDate = new Date(time_bound);
+      const delta = asDate - this.now;
+      const secs = Math.floor(delta / 1000);
+      const displaySecs = secs % 60;
+      const minutes = Math.floor(secs / 60);
+      const displayMins = minutes % 60;
+      const hours = Math.floor(minutes / 60);
+
+      timeBound = `${hours}:` +
+        `${('0' + displayMins).slice(-2)}:` +
+        `${('0' + displaySecs).slice(-2)}`;
+    } else {
+      timeBound = 'forever';
+    }
     return (
       <tr key={i}>
         <td>{name}</td>
-        <td>{time_bound}</td>
+        <td>{timeBound}</td>
         <td onClick={() => this.handleCloseDevice(mac)}>[close]</td>
       </tr>
     );
@@ -92,7 +128,7 @@ class App extends Component {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Time</th>
+            <th>Time Left</th>
             <th>-</th>
           </tr>
         </thead>
@@ -172,6 +208,7 @@ class App extends Component {
       closedDevices,
       unknownDevices,
     } = this.props;
+    this.now = Date.now()
     return (
       <div>
         <div>Loading? {JSON.stringify(loading)}</div>

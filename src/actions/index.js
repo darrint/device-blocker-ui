@@ -10,10 +10,10 @@ export function doUpdateCurrentState() {
   };
 }
 
-export function doOpenDevice(mac, timeBound) {
+export function doOpenDevice(mac, timeSecs) {
   return async (dispatch, _, {api}) => {
     dispatch(markLoadingAction(true));
-    const world = await api.openDevice(mac, timeBound);
+    const world = await api.openDevice(mac, timeSecs);
     dispatch(updateWorldAction(world));
     dispatch(markLoadingAction(false));
   };

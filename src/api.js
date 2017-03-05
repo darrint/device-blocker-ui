@@ -39,8 +39,12 @@ export class Api {
       return await get("/api");
   }
 
-  async openDevice(mac, timeBound) {
-      return await post("/api/device/open", {mac, timeBound});
+  async openDevice(mac, timeSecs) {
+      const payload = {mac};
+      if (timeSecs) {
+          payload['time_secs'] = timeSecs;
+      }
+      return await post("/api/device/open", payload);
   }
 
   async closeDevice(mac) {
