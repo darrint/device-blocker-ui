@@ -5,6 +5,7 @@ import {
   doOpenDevice,
   doCloseDevice,
   doAddDevice,
+  doRefreshDevices,
   doOverrideAll,
   doGuestAllow,
   editNameAction,
@@ -99,6 +100,11 @@ class App extends Component {
     dispatch(doAddDevice(mac, name));
   }
 
+  handleRefreshDevices() {
+    const {dispatch} = this.props;
+    dispatch(doRefreshDevices());
+  }
+
   handleEditName(mac, name) {
     const {dispatch} = this.props;
     dispatch(editNameAction(mac, name));
@@ -189,13 +195,18 @@ class App extends Component {
     const {guestAllow} = this.props;
     return (
       <div>
-        <span onClick={() => this.handleGuestAllowClick(true)}>
+        Guests: <span onClick={() => this.handleGuestAllowClick(true)}>
           [open]
         </span>
         <span onClick={() => this.handleGuestAllowClick(false)}>
           [close]
         </span>
         {guestAllow && guestAllow.item ? guestAllow.item : "??"}
+        |
+        <span onClick={() => this.handleRefreshDevices()}>
+          [refresh]
+        </span>
+
       </div>
     );
 

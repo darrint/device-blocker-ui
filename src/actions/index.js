@@ -37,6 +37,15 @@ export function doAddDevice(mac, name) {
   };
 }
 
+export function doRefreshDevices() {
+  return async (dispatch, _, {api}) => {
+    dispatch(markLoadingAction(true));
+    const world = await api.refreshDevices();
+    dispatch(updateWorldAction(world));
+    dispatch(markLoadingAction(false));
+  };
+}
+
 export function doOverrideAll(overrideValue) {
   return async (dispatch, _, {api}) => {
     dispatch(markLoadingAction(true));

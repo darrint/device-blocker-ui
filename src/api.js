@@ -55,6 +55,10 @@ export class Api {
       return await post("/api/add_device", {mac, name});
   }
 
+  async refreshDevices() {
+      return await post("/api/refresh_devices");
+  }
+
   async overrideAll(overrideValue) {
     let override;
     if (overrideValue === null) {
